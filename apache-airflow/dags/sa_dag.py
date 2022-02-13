@@ -14,10 +14,10 @@ from airflow.contrib.operators.ssh_operator import SSHOperator
 from airflow.contrib.hooks.ssh_hook import SSHHook
 import configparser
 parser = configparser.ConfigParser()
-parser.read("credentials.conf")
+parser.read("dags/credentials.conf")
 webhook_url = parser.get("slack", "webhook_url")
 
-sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= '/home/ronald/.ssh/id_rsa.pub' )
+sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= '/opt/airflow/dags/id_rsa.pub')
 root = '/mnt/c/Users/Ron/git-repos/pipeline-scripts/'
 
 dag = DAG(

@@ -4,21 +4,27 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
+
 import configparser
 parser = configparser.ConfigParser()
-parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/credentials.conf")
+# parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/credentials.conf")
+parser.read("dags/credentials.conf")
 webhook_url = parser.get("slack", "webhook_url")
 
 dag = DAG(
     'apache_airflow_perf',
     description="This assists in getting a view of the performance of our pipelines",
     schedule_interval = '30 13 * * *',
-    template_searchpath="/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/scripts",
+    template_searchpath="/opt/airflow/dags/scripts",
     start_date= datetime(2022, 1, 8)
 )
 
 root_folder = "/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/scripts"
 root_folder2 = "/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow"
+
+root_folder = "/opt/airflow/dags/scripts"
+root_folder2 = "/opt/airflow/data_folder"
+
 the_day = datetime.now().strftime('%Y-%m-%d')
 directory = f"extract_{the_day}"
 
@@ -54,7 +60,7 @@ valid_res_daily_model_task = PostgresOperator(
     sql=f"/validator_res_daily.sql",
 )
 
-print("curl -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"nice job on the data orchestration for pipeline performance ^_^\"}\'",f"{webhook_url}")
+# print("curl -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"nice job on the data orchestration for pipeline performance ^_^\"}\'",f"{webhook_url}")
 
 final_message_task = BashOperator(
     task_id='final_message',

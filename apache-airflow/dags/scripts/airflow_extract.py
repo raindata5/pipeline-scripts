@@ -8,7 +8,7 @@ import os
 
 the_day = datetime.now().strftime('%Y-%m-%d')
 directory = f"extract_{the_day}"
-root_folder2 = "/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow"
+root_folder2 = "/opt/airflow/data_folder"
 
 # if not os.path.isdir(f'{root_folder2}/directory'):
 #     os.makedirs(directory)
@@ -18,7 +18,7 @@ root_folder2 = "/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow"
 
 # get db dwh connection info
 parser = configparser.ConfigParser()
-parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/pipeline.conf")
+parser.read("/opt/airflow/dags/pipeline.conf")
 dbname = parser.get("postgres_dwh", "database")
 user = parser.get("postgres_dwh", "username")
 password = parser.get("postgres_dwh", "password")
@@ -43,7 +43,7 @@ ps_conn.commit()
 # get airflow db info
 
 parser = configparser.ConfigParser()
-parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/pipeline.conf")
+parser.read("/opt/airflow/dags/pipeline.conf")
 dbname2 = parser.get("airflow_db", "database")
 user2 = parser.get("airflow_db", "username")
 password2 = parser.get("airflow_db", "password")
@@ -66,7 +66,7 @@ results = cursor.fetchall()
 
 
 
-absolute_path = "/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/scripts/"
+
 with open(f'{root_folder2}/{directory}/dag_runs_01.csv', 'w') as fp:
     csv_w = csv.writer(fp, delimiter='|')
     csv_w.writerows(results)

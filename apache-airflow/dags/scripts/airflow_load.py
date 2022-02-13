@@ -11,7 +11,7 @@ directory = f"extract_{the_day}"
 
 # get db dwh connection info
 parser = configparser.ConfigParser()
-parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/pipeline.conf")
+parser.read("/opt/airflow/dags/pipeline.conf")
 dbname = parser.get("postgres_dwh", "database")
 user = parser.get("postgres_dwh", "username")
 password = parser.get("postgres_dwh", "password")
@@ -21,7 +21,7 @@ port = parser.get("postgres_dwh", "port")
 ps_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host= host, port=port)
 
 cursor = ps_conn.cursor()
-absolute_path = "/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow"
+absolute_path = "/opt/airflow/data_folder"
 
 
 # print(os.getcwd())

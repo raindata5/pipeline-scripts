@@ -1,3 +1,4 @@
+*kube*
 *.conf
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -20,8 +21,14 @@ local_raw_data
 *.db
 *.rdb
 *.env
-
-
+yelp-data-venv/
+yelp-data-venv-windows/
+*.conf
+*.csv
+*.json
+python_scripts/__pycache__/*
+*.pyc
+*.pub
 
 
 # C extensions
