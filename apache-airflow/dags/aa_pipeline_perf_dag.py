@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
@@ -8,7 +9,8 @@ from airflow.operators.dummy_operator import DummyOperator
 import configparser
 parser = configparser.ConfigParser()
 # parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/credentials.conf")
-parser.read("dags/credentials.conf")
+current_file = os.path.dirname(__file__)
+parser.read(os.path.join(current_file, "../credentials.conf"))
 webhook_url = parser.get("slack", "webhook_url")
 
 dag = DAG(

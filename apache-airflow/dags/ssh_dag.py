@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
@@ -11,7 +12,8 @@ sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= '/opt/airflow/dags/id_rsa.
 import configparser
 parser = configparser.ConfigParser()
 # parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/credentials.conf")
-parser.read("dags/credentials.conf")
+current_file = os.path.dirname(__file__)
+parser.read(os.path.join(current_file, "../credentials.conf"))
 webhook_url = parser.get("slack", "webhook_url")
 root = '/mnt/c/Users/Ron/git-repos/pipeline-scripts/'
 gdp_ve = '/home/ubuntucontributor/gourmand-data-pipelines/dp_venv/bin'
@@ -25,7 +27,7 @@ dag = DAG(
     description='EtLT pipeline',
     # schedule_interval=timedelta(days=1),
     schedule_interval='30 12 * * *',
-    start_date = datetime(2022, 1, 29),
+    start_date = datetime(2022, 8, 29),
     dagrun_timeout=timedelta(minutes=120)
 )
 

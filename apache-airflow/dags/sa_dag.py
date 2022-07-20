@@ -2,22 +2,24 @@
 # check if both tables have the same count
 # truncate the second table
 # seems I have to use postgres but maybe not conn worked on wsl
-
+import os
 from datetime import timedelta
+import configparser
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
-
 from airflow.contrib.operators.ssh_operator import SSHOperator
 from airflow.contrib.hooks.ssh_hook import SSHHook
-import configparser
+
 parser = configparser.ConfigParser()
-parser.read("dags/credentials.conf")
+# parser.read("../credentials.conf")
+current_file_dir = os.path.dirname(__file__)
+parser.read(os.path.join(current_file_dir, "../credentials.conf"))
 webhook_url = parser.get("slack", "webhook_url")
 
-sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= '/opt/airflow/dags/id_rsa.pub')
+sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= os.path.join(current_file_dir, "../id_rsa.pub"))
 root = '/mnt/c/Users/Ron/git-repos/pipeline-scripts/'
 
 dag = DAG(
