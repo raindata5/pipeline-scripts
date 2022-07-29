@@ -10,15 +10,15 @@ import configparser
 parser = configparser.ConfigParser()
 # parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/credentials.conf")
 current_file = os.path.dirname(__file__)
-parser.read(os.path.join(current_file, "../credentials.conf"))
+parser.read(os.path.join(current_file, "../conf/credentials.conf"))
 webhook_url = parser.get("slack", "webhook_url")
 
 dag = DAG(
     'apache_airflow_perf',
     description="This assists in getting a view of the performance of our pipelines",
     schedule_interval = '30 13 * * *',
-    template_searchpath="/opt/airflow/dags/scripts",
-    start_date= datetime(2022, 1, 8)
+    template_searchpath="/opt/airflow/scripts",
+    start_date= datetime(2022, 7, 25)
 )
 
 root_folder = "/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/scripts"

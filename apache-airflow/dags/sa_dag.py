@@ -16,10 +16,10 @@ from airflow.contrib.hooks.ssh_hook import SSHHook
 parser = configparser.ConfigParser()
 # parser.read("../credentials.conf")
 current_file_dir = os.path.dirname(__file__)
-parser.read(os.path.join(current_file_dir, "../credentials.conf"))
+parser.read(os.path.join(current_file_dir, "../conf/credentials.conf"))
 webhook_url = parser.get("slack", "webhook_url")
 
-sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= os.path.join(current_file_dir, "../id_rsa.pub"))
+sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= os.path.join(current_file_dir, "../conf/id_rsa.pub"))
 root = '/mnt/c/Users/Ron/git-repos/pipeline-scripts/'
 
 dag = DAG(

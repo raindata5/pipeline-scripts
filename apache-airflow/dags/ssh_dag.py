@@ -8,12 +8,11 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.contrib.hooks.ssh_hook import SSHHook
 from airflow.providers.ssh.operators.ssh import SSHOperator
 # a test
-sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= '/opt/airflow/dags/id_rsa.pub')
+sshhook = SSHHook(ssh_conn_id='ssh_default',key_file= '/opt/airflow/conf/id_rsa.pub')
 import configparser
 parser = configparser.ConfigParser()
-# parser.read("/mnt/c/Users/Ron/git-repos/pipeline-scripts/apache-airflow/dags/credentials.conf")
 current_file = os.path.dirname(__file__)
-parser.read(os.path.join(current_file, "../credentials.conf"))
+parser.read(os.path.join(current_file, "../conf/credentials.conf"))
 webhook_url = parser.get("slack", "webhook_url")
 root = '/mnt/c/Users/Ron/git-repos/pipeline-scripts/'
 gdp_ve = '/home/ubuntucontributor/gourmand-data-pipelines/dp_venv/bin'

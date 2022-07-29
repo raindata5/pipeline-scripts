@@ -65,7 +65,9 @@ x-airflow-common:
     - ./plugins:/opt/airflow/plugins
     - ./data_folder:/opt/airflow/data_folder
     - ./scripts:/opt/airflow/scripts
-    - ./:/opt/airflow/
+    - ./conf:/opt/airflow/conf
+    - ./tests:/opt/airflow/tests
+  # user: "1000:0"
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
